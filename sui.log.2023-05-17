@@ -1,0 +1,4 @@
+2023-05-17T18:48:55.962308Z  INFO sui::client_commands: devnet
+2023-05-17T18:48:58.265235Z  INFO sui::client_commands: devnet => https://fullnode.devnet.sui.io:443 (active)
+2023-05-17T18:48:58.265262Z  INFO sui::client_commands: local => http://127.0.0.1:9000
+2023-05-17T18:48:58.265265Z  INFO sui::client_commands: localnet => http://0.0.0.0:9000
