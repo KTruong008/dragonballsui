@@ -72,10 +72,38 @@ module dragonballsui::main {
     // public entry fun make_wish(wish: vector<u8>, person: &mut Person, ctx: &mut TxContext) {}
 
     #[test]
-    fun test_init() {
+    fun test_create_person() {
         // use sui::tx_context;
         use sui::test_scenario;
-        use std::debug;
+
+        let admin = @0x123;
+        let goku = @0x456;
+
+        // Init
+        let scenario_val = test_scenario::begin(admin);
+        let scenario = &mut scenario_val;
+        {
+            init(test_scenario::ctx(scenario));
+        };
+
+        // Create person
+        test_scenario::next_tx(scenario, goku);
+        create_person(b"Goku", test_scenario::ctx(scenario));
+
+        // Assert person created
+        test_scenario::next_tx(scenario, goku);
+        let person = test_scenario::take_from_sender<Person>(scenario);
+        assert!(person.name == string::utf8(b"Goku"), 0);
+        test_scenario::return_to_sender<Person>(scenario, person);
+
+        test_scenario::end(scenario_val);
+    }
+
+    #[test]
+    fun test_init_creates_dragonballs() {
+        // use sui::tx_context;
+        use sui::test_scenario;
+        // use std::debug;
 
         let admin = @0x123;
         let goku = @0x456;
@@ -96,13 +124,13 @@ module dragonballsui::main {
         let dragonball1 = test_scenario::take_shared<Dragonball>(scenario);
 
         
-        debug::print(&dragonball7);
-        debug::print(&dragonball6);
-        debug::print(&dragonball5);
-        debug::print(&dragonball4);
-        debug::print(&dragonball3);
-        debug::print(&dragonball2);
-        debug::print(&dragonball1);
+        // debug::print(&dragonball7);
+        // debug::print(&dragonball6);
+        // debug::print(&dragonball5);
+        // debug::print(&dragonball4);
+        // debug::print(&dragonball3);
+        // debug::print(&dragonball2);
+        // debug::print(&dragonball1);
         // let dragonball2 = test_scenario::take_shared<Dragonball>(scenario);
         assert!(dragonball7.stars == 7, 0);
         assert!(dragonball6.stars == 6, 0);
